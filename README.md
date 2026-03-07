@@ -1,131 +1,277 @@
 # 🧮 Math Mentor
 
-An AI-powered math problem solver that accepts text, image, and audio inputs, provides step-by-step solutions, learns from feedback, and improves over time.
+**Math Mentor** is an AI-powered assistant designed to help students solve mathematics problems with clear, step-by-step explanations.
+It supports **text, image, and audio inputs**, retrieves relevant mathematical knowledge, and uses a **multi-agent reasoning pipeline** to generate reliable solutions.
 
-## 🌟 Features
+The system is designed not only to solve problems, but also to **explain the reasoning process**, helping students understand the concepts behind the solution.
 
-- **Multimodal Input**: Text, Image (OCR), and Audio (Speech-to-Text)
-- **Multi-Agent System**: 5 specialized agents (Parser, Router, Solver, Verifier, Explainer)
-- **RAG Pipeline**: Retrieves relevant formulas and methods from curated knowledge base
-- **Human-in-the-Loop**: Asks for help when uncertain
-- **Memory & Learning**: Remembers past problems and improves over time
-- **Step-by-Step Explanations**: Clear, student-friendly breakdowns
+---
 
-## 📋 Prerequisites
+## 🌟 Key Features
 
-- Python 3.9 or higher
-- Groq API key (free)
+**Multimodal Problem Input**
 
-## 🚀 Installation
+* 📄 **Text Input** – type a math problem directly
+* 📸 **Image Input** – upload photos or screenshots of questions
+* 🎤 **Audio Input** – speak a problem and convert speech to text
+
+**Multi-Agent Architecture**
+
+The system uses specialized agents working together:
+
+* **Parser Agent** – converts raw input into structured math problems
+* **Router Agent** – identifies the type of mathematical task
+* **Solver Agent** – generates a step-by-step solution
+* **Verifier Agent** – checks solution correctness
+* **Explainer Agent** – rewrites the solution for student clarity
+
+**Retrieval-Augmented Generation (RAG)**
+
+Relevant formulas, methods, and examples are retrieved from a curated knowledge base before solving.
+
+**Human-in-the-Loop**
+
+If the system is uncertain (low confidence or unclear input), it requests clarification from the user.
+
+**Memory System**
+
+The application stores previous interactions and solutions, allowing it to:
+
+* recall past problems
+* reuse successful reasoning patterns
+* improve explanations over time
+
+---
+
+## 🏗️ System Architecture
+
+```
+User Input (Text / Image / Audio)
+        │
+        ▼
+Input Processors
+(OCR / Speech-to-Text / Text)
+        │
+        ▼
+Parser Agent
+        │
+        ▼
+Router Agent
+(problem classification)
+        │
+        ▼
+RAG Retrieval
+(knowledge base lookup)
+        │
+        ▼
+Solver Agent
+(step-by-step reasoning)
+        │
+        ▼
+Verifier Agent
+(correctness validation)
+        │
+        ▼
+Explainer Agent
+(student-friendly explanation)
+        │
+        ▼
+UI Display + Memory Storage
+```
+
+---
+
+## 🧰 Technology Stack
+
+**LLM Inference**
+
+* Groq (Llama 3.3 70B)
+
+**Frameworks & Libraries**
+
+* Streamlit — interactive web interface
+* LangGraph — multi-agent orchestration
+* ChromaDB — vector database for RAG
+* HuggingFace Sentence Transformers — embeddings
+* EasyOCR — image text extraction
+* Groq Whisper — speech-to-text
+
+**Storage**
+
+* SQLite — conversation and solution memory
+
+---
+
+## 📂 Project Structure
+
+```
+math-mentor
+│
+├── app.py                  # Streamlit application
+├── requirements.txt
+├── README.md
+│
+├── agents/                 # Multi-agent reasoning pipeline
+├── input_processors/       # OCR, speech, and text processing
+├── rag/                    # Retrieval-Augmented Generation
+│   └── knowledge_base/
+├── memory/                 # Persistent memory store
+├── tools/                  # Utility tools (calculator etc.)
+└── utils/                  # Config, prompts, API client
+```
+
+---
+
+## ⚙️ Installation
 
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/unnathi1482/math-mentor.git
 cd math-mentor
+```
 
-2. Install dependencies
-Bash
+### 2. Install dependencies
 
+```bash
 pip install -r requirements.txt
-3. Set up environment variables
-Copy .env.example to .env:
+```
 
-Bash
+### 3. Configure environment variables
 
+Copy the example environment file:
+
+```bash
 copy .env.example .env
-Edit .env and add your Groq API key:
+```
 
-text
+Then open `.env` and add your Groq API key:
 
+```
 GROQ_API_KEY=your_groq_api_key_here
-Get free Groq API key: https://console.groq.com/keys
+```
 
-4. Build the RAG index (first time only)
-Bash
+You can obtain a free API key from the Groq console.
 
+---
+
+## 🔎 Build the Knowledge Index (First Run)
+
+Before running the application, generate the vector index used for retrieval:
+
+```bash
 python rag/indexer.py
-This will process the knowledge base and create a vector store.
+```
 
-▶️ Running the Application
-Bash
+This step processes the knowledge base and creates the vector store.
 
+---
+
+## ▶️ Running the Application
+
+Start the Streamlit interface:
+
+```bash
 streamlit run app.py
-The app will open in your browser at http://localhost:8501
+```
 
-🎯 Usage
-Text Input
-Select "📄 Text"
-Type your math problem
-Click "Solve Problem"
-Image Input
-Select "📸 Image"
-Upload a photo or screenshot
-Verify extracted text (IMPORTANT: Always check OCR output!)
-Click "Looks Good - Solve It!"
-Audio Input
-Select "🎤 Audio"
-Upload an audio file
-Review transcription
-Click "Solve Problem"
-🤝 Human-in-the-Loop (HITL)
-HITL is triggered when:
+The application will launch in your browser at:
 
-OCR/Audio confidence is low (< 70%)
-Parser needs clarification
-Verifier is uncertain (< 80% confidence)
-Always verify extracted text from images/audio before solving!
+```
+http://localhost:8501
+```
 
-📊 Memory & Learning
-The system stores every interaction in memory/memory.db (SQLite).
+---
 
-Remembers past problems
-Learns from corrections
-Reuses successful solution patterns
-🧪 Testing Individual Components
+## 🎯 Usage
 
-🏗️ Architecture
+### Text Input
 
-User Input (Text/Image/Audio)
-    ↓
-Input Processors (OCR/Whisper/Text)
-    ↓
-Parser Agent → Structured Problem
-    ↓
-Router Agent → Problem Classification
-    ↓
-RAG Retrieval → Relevant Knowledge
-    ↓
-Solver Agent → Step-by-Step Solution
-    ↓
-Verifier Agent → Correctness Check
-    ↓
-Explainer Agent → Student-Friendly Explanation
-    ↓
-Display + Memory Storage
+1. Select **Text**
+2. Enter a math problem
+3. Click **Solve Problem**
 
-🔧 Technology Stack
-LLM: Groq (Llama 3.3 70B) - Free API
-Embeddings: HuggingFace (sentence-transformers) - Free, Local
-Vector Store: ChromaDB
-OCR: EasyOCR
-Speech-to-Text: Groq Whisper
-UI: Streamlit
-Memory: SQLite
-Agents: LangGraph
+### Image Input
 
-🐛 Troubleshooting
-Error: "GROQ_API_KEY not found"
+1. Select **Image**
+2. Upload a photo or screenshot
+3. Verify the extracted OCR text
+4. Solve the problem
 
-Make sure .env file exists and contains your API key
-Error: "Vector store not found"
+### Audio Input
 
-Run python rag/indexer.py to build the RAG index
-OCR not working well
+1. Select **Audio**
+2. Upload an audio recording
+3. Review the transcription
+4. Solve the problem
 
-Use clear, high-contrast images
-Larger font size helps
-Always verify extracted text manually
+---
 
-👨‍💻 Author - Unnathi Yamavaram
+## 🤝 Human-in-the-Loop (HITL)
+
+The system requests user confirmation when:
+
+* OCR confidence is low
+* speech transcription is uncertain
+* the parser needs clarification
+* the verifier detects a possible mistake
+
+This helps maintain solution accuracy.
+
+---
+
+## 🧠 Memory System
+
+All interactions are stored locally using SQLite.
+
+The system can:
+
+* remember previously solved problems
+* learn from corrections
+* reuse successful reasoning patterns
+
+Database location:
+
+```
+memory/memory.db
+```
+
+---
+
+## 🐛 Troubleshooting
+
+**GROQ_API_KEY not found**
+
+Ensure your `.env` file exists and contains the API key.
+
+**Vector store not found**
+
+Run:
+
+```
+python rag/indexer.py
+```
+
+**OCR inaccuracies**
+
+For best results:
+
+* use clear, high-contrast images
+* avoid handwritten text if possible
+* verify extracted text before solving
+
+---
+
+## 👨‍💻 Author
+
+**Unnathi Yamavaram**
+
+AI / ML Developer
+GitHub: [https://github.com/unnathi1482](https://github.com/unnathi1482)
+
+---
+
+## 📄 License
+
+This project is open source and available under the MIT License.
 
