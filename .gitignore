@@ -1,5 +1,5 @@
-.env 
-__pycache__/ 
-*.pyc 
-rag/chroma_store/ 
-memory/*.db 
+.env
+__pycache__/
+*.pyc
+*.db
+rag/chroma_store/
