@@ -1,3 +1,5 @@
+# Groq SDK
+groq==0.7.0   # replace with latest stable if different
 # Core
 streamlit==1.45.0
 python-dotenv==1.1.0
