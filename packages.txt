@@ -1,0 +1,6 @@
+freeglut3-dev
+libgtk2.0-dev
+zlib1g-dev
+libjpeg-dev
+g++
+libffi-dev

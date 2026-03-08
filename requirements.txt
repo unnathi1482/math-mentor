@@ -1,25 +1,19 @@
-# Core
-groq
-streamlit==1.37.0
-python-dotenv
+# App
+streamlit==1.45.0
+python-dotenv==1.1.0
+groq==1.0.0
 
-# LLM & Agents
-openai
-langchain==0.2.16
-langchain-openai==0.1.23
-langchain-community==0.2.16
+# RAG
+chromadb==1.0.8
+langchain-community==0.3.24
+langchain-text-splitters==0.3.11
+sentence-transformers==4.1.0
 
-# RAG & Vector Store
-chromadb==0.4.24
-sentence-transformers
+# OCR
+easyocr==1.7.2
+Pillow==11.2.1
 
-# OCR & Image Processing
-easyocr
-Pillow
-
-# Database
-sqlalchemy
-
-# Utilities
-pydantic==2.8.2
-numpy<2
+# Storage / utils
+sqlalchemy==2.0.41
+pydantic==2.11.4
+numpy==1.26.4
