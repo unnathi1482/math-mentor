@@ -1,17 +1,16 @@
 # Core
 groq
-streamlit
+streamlit==1.37.0
 python-dotenv
 
 # LLM & Agents
 openai
-langchain
-langchain-openai
-langchain-community
-langgraph
+langchain==0.2.16
+langchain-openai==0.1.23
+langchain-community==0.2.16
 
 # RAG & Vector Store
-chromadb
+chromadb==0.4.24
 sentence-transformers
 
 # OCR & Image Processing
@@ -22,5 +21,5 @@ Pillow
 sqlalchemy
 
 # Utilities
-pydantic
-numpy
+pydantic==2.8.2
+numpy<2
