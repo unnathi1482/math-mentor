@@ -1,6 +1,16 @@
-.env
-__pycache__/
-*.pyc
-*.db
-rag/chroma_store/".streamlit/secrets.toml" 
-".streamlit/secrets.toml" 
+# Environment variables 
+.env 
+ 
+# Python 
+__pycache__/ 
+*.py[cod] 
+*.pyc 
+ 
+# ChromaDB 
+rag/chroma_store/ 
+ 
+# Memory 
+memory/memory.db 
+ 
+# Streamlit 
+.streamlit/
