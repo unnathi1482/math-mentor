@@ -5,18 +5,28 @@ from dotenv import load_dotenv
 # Get the project root directory
 PROJECT_ROOT = Path(__file__).parent.parent
 
-# Load environment variables from .env file (explicit path)
+# Load environment variables from .env file (for local development)
 env_path = PROJECT_ROOT / ".env"
 load_dotenv(dotenv_path=env_path)
 
-# Groq Settings
+# Try to get keys from environment OR Streamlit secrets
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+
+# If not found in env, try Streamlit secrets
+if not GROQ_API_KEY:
+    try:
+        import streamlit as st
+        GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", None)
+        GROQ_MODEL = st.secrets.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+    except Exception:
+        pass
+
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # Validate API Key
 if not GROQ_API_KEY:
-    raise ValueError(f"GROQ_API_KEY not found! Check your .env file at: {env_path}")
+    raise ValueError(f"GROQ_API_KEY not found! Check .env file or Streamlit secrets.")
 
 # App Settings
 APP_NAME = "Math Mentor"
